@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('correction_request_breaks', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            //$table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->tinyInteger('role');
-            $table->timestamps();
+            $table->foreignId('correction_request_id')->constrained('correction_requests');
+            $table->time('start_time')->nullable();
+            $table->time('end_time')->nullable();
         });
     }
 
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('correction_request_breaks');
     }
 };
