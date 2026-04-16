@@ -9,6 +9,7 @@
 
 <body>
     <form action="/register" method="post" class="">
+        @csrf
         <h1>会員登録</h1>
         <div>
             <label for="name">名前</label>
