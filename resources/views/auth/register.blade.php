@@ -23,8 +23,8 @@
             <input name="password" id="password" type="password" value="{{ old('password') }}">
         </div>
         <div>
-            <label for="password_confirm">パスワード確認</label>
-            <input name="password_confirm" id="password_confirm" type="password">
+            <label for="password_confirmation">パスワード確認</label>
+            <input name="password_confirmation" id="password_confirmation" type="password">
         </div>
         <button>登録する</button>
         <a href="/login">ログインはこちら</a>
