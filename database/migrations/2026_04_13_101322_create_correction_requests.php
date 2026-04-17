@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('comment');
             $table->tinyInteger('approval');
             $table->foreignId('approver_id')->nullable()->constrained('users');
+            $table->timestamps();
         });
     }
 

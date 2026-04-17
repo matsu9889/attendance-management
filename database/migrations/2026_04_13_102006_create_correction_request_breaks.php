@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('correction_request_id')->constrained('correction_requests');
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
+            $table->timestamps();
         });
     }
 

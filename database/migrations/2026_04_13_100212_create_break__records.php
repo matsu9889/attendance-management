@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('attendance_id')->constrained('attendance_records');
             $table->time('start_time');
             $table->time('end_time')->nullable();
+            $table->timestamps();
         });
     }
 
