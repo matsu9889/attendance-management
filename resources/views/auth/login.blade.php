@@ -1,37 +1,32 @@
-<!DOCTYPE html>
-<html lang="ja">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/login.css') }}">
+@endsection
 
-<body>
-    <form action="/login" method="post" class="">
-        @csrf
-        <h1>ログイン</h1>
-        <div>
-            <label for="email">メールアドレス</label>
-            <input name="email" id="email" type="email" value="{{ old('email') }}">
-            <div class="form__error">
-                @error('email')
-                {{ $message }}
-                @enderror
-            </div>
+@section('content')
+<form action="/login" method="post" class="">
+    @csrf
+    <h1>ログイン</h1>
+    <div>
+        <label for="email">メールアドレス</label>
+        <input name="email" id="email" type="email" value="{{ old('email') }}">
+        <div class="form__error">
+            @error('email')
+            {{ $message }}
+            @enderror
         </div>
-        <div>
-            <label for="password">パスワード</label>
-            <input name="password" id="password" type="password">
-            <div class="form__error">
-                @error('password')
-                {{ $message }}
-                @enderror
-            </div>
+    </div>
+    <div>
+        <label for="password">パスワード</label>
+        <input name="password" id="password" type="password">
+        <div class="form__error">
+            @error('password')
+            {{ $message }}
+            @enderror
         </div>
-        <button>ログインする</button>
-        <a href="/register">会員登録はこちら</a>
-    </form>
-</body>
-
-</html>
+    </div>
+    <button>ログインする</button>
+    <a href="/register">会員登録はこちら</a>
+</form>
+@endsection
