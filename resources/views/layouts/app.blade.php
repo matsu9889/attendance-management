@@ -13,7 +13,7 @@
 <body>
     <header class="header">
         <div class="header_logo">
-            <a href="/">
+            <a href="/attendance">
                 <img class="header_img" src="{{ asset('images/COACHTECHヘッダーロゴ.png') }}" alt="COACHTECH">
             </a>
         </div>
@@ -21,24 +21,24 @@
         <ul class="header-nav">
             @auth
             <li class="header-nav__item">
-                <a class="header-nav__mypage" href="/attendance">勤怠</a>
+                <a class="header-nav__link" href="/attendance">勤怠</a>
             </li>
             <li class="header-nav__item">
-                <a class="header-nav__listing" href="/attendance/list">勤怠一覧</a>
+                <a class="header-nav__link" href="/attendance/list">勤怠一覧</a>
             </li>
             <li class="header-nav__item">
-                <a class="header-nav__listing" href="/stamp_correction_request/list">申請</a>
+                <a class="header-nav__link" href="/stamp_correction_request/list">申請</a>
             </li>
             <li class="header-nav__item">
                 <form action="/logout" method="post">
                     @csrf
-                    <button class="header-nav__logout">ログアウト</button>
+                    <button class="header-nav__button">ログアウト</button>
                 </form>
             </li>
             @else
             <li>
                 <a href="/login">
-                    <button class="header-nav__login">ログイン</button>
+                    <button class="header-nav__button">ログイン</button>
                 </a>
             </li>
             @endauth

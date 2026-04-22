@@ -1,0 +1,32 @@
+.header {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 30px;
+    display: flex;
+    justify-content: space-between;
+    background: #000;
+    height: 50px;
+    align-items: center;
+}
+
+.header-nav {
+    display: flex;
+    gap: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    align-items: center;
+}
+
+.header-nav__link {
+    color: #FFF;
+    text-decoration: none;
+}
+
+.header-nav__button {
+    background: none;
+    color: #FFF;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
