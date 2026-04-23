@@ -16,4 +16,5 @@ use App\Http\Controllers\AttendanceController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/attendance', [AttendanceController::class, 'create']);
+    Route::post('/attendance', [AttendanceController::class, 'store']);
 });
