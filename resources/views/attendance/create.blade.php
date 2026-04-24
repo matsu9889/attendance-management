@@ -16,14 +16,9 @@
     <p>勤務外</p>
     @endif
 </div>
-
-<?php
-$date = new DateTime();
-echo $date->format('Y-m-d');
-echo $date->format('H:i')
-?>
-<p>日付</p>
-
-<p>時間</p>
+<div>
+    <p>{{$date}}</p>
+    <p>{{$time}}</p>
+</div>
 <button>出勤</button>
 @endsection
