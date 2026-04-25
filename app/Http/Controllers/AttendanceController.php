@@ -19,8 +19,14 @@ class AttendanceController extends Controller
         return view('attendance.create', compact('date', 'time'));
     }
 
-    public function store()
+    public function store(Request $request)
     {
+        $request->session()->put('work_status','出勤中');
+        $request->input('action');
+
         return view('attendance.create');
     }
+
+            Attendance::create($form);
+        $form = $date . $time;
 }
