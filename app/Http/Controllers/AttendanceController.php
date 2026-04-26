@@ -28,13 +28,15 @@ class AttendanceController extends Controller
         $date = $now->format('Y年m月d日');
         $date = $date . '(' . $weekday[$now->dayOfWeek] . ')';
         $time = $now->format('H:i');
-        $request->session()->put('work_status', '出勤中');
+
         Attendance::create([
             'user_id' => auth()->id(),
             'date' => $now->format('Y-m-d'),
             'start_time' => $now->format('H:i'),
             'end_time' => NULL,
         ]);
+
+        $request->session()->put('work_status', '出勤中');
         return view('attendance.create', compact('date', 'time'));
     }
 
@@ -46,8 +48,14 @@ class AttendanceController extends Controller
         $date = $now->format('Y年m月d日');
         $date = $date . '(' . $weekday[$now->dayOfWeek] . ')';
         $time = $now->format('H:i');
-        $request->session()->put('work_status', '退勤済');
 
+        Attendance::where('user_id', auth()->id(),)
+            ->whereNull('end_time')
+            ->update([
+                'end_time' => $now->format('H:i'),
+            ]);
+
+        $request->session()->put('work_status', '退勤済');
         return view('attendance.create', compact('date', 'time'));
     }
 
