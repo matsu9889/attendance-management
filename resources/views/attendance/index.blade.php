@@ -21,9 +21,17 @@
         <th>合計</th>
         <th>詳細</th>
     </tr>
+    @foreach($attendances as $attendance)
     <tr>
+        <td>{{$attendance->date}}</td>
+        <td>{{$attendance->start_time}}</td>
+        <td>{{$attendance->end_time}}</td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
     </tr>
+    @endforeach
 </table>
 
 @endsection

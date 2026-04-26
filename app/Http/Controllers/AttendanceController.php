@@ -17,7 +17,8 @@ class AttendanceController extends Controller
         $date = $now->format('Y年m月d日');
         $date = $date . '(' . $weekday[$now->dayOfWeek] . ')';
         $time = $now->format('H:i');
-        return view('attendance.create', compact('date', 'time'));
+        $date2 = $now->isoFormat('YYYY年MM月DD日(ddd)'); //追加してみた。あとで整理
+        return view('attendance.create', compact('date', 'time', 'date2'));
     }
 
     // 出勤登録機能
@@ -115,6 +116,12 @@ class AttendanceController extends Controller
 
     public function index()
     {
-        return view('attendance.index');
+        $attendances = Attendance::where('user_id', auth()->id())
+            ->with('breakRecord')
+            ->get();
+
+        $dif = Carbon::parse($break->end_time)->diffInMinutes(Carbon::parse($break->start_time));
+        $breakrecord = $attendance->breakRecord->sum($dif);
+        return view('attendance.index', compact('attendances'));
     }
 }

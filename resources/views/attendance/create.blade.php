@@ -18,6 +18,7 @@
 </div>
 <div>
     <p>{{$date}}</p>
+    <p>{{$date2}}</p>
     <p>{{$time}}</p>
 </div>
 @if(session('work_status') == '出勤中')
