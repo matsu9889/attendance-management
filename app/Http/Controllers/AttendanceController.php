@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Models\Attendance;
 
 class AttendanceController extends Controller
 {
@@ -26,6 +27,12 @@ class AttendanceController extends Controller
         $date = $date . '(' . $weekday[$now->dayOfWeek] . ')';
         $time = $now->format('H:i');
         $request->session()->put('work_status', '出勤中');
+        Attendance::create([
+            'user_id' => auth()->id(),
+            'date' => $now->format('Y-m-d'),
+            'start_time' => $now->format('H:i'),
+            'end_time' => NULL,
+        ]);
         return view('attendance.create', compact('date', 'time'));
     }
 
@@ -37,6 +44,7 @@ class AttendanceController extends Controller
         $date = $date . '(' . $weekday[$now->dayOfWeek] . ')';
         $time = $now->format('H:i');
         $request->session()->put('work_status', '退勤済');
+
         return view('attendance.create', compact('date', 'time'));
     }
 
