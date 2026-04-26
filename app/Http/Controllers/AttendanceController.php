@@ -112,4 +112,9 @@ class AttendanceController extends Controller
         $request->session()->put('work_status', '出勤中');
         return view('attendance.create', compact('date', 'time'));
     }
+
+    public function index()
+    {
+        return view('attendance.index');
+    }
 }
