@@ -29,6 +29,14 @@ class AttendanceController extends Controller
         $date = $date . '(' . $weekday[$now->dayOfWeek] . ')';
         $time = $now->format('H:i');
 
+        $exists = Attendance::where('user_id', auth()->id())
+            ->where('date', $now->format('Y-m-d'))
+            ->exists();
+
+        if ($exists) {
+            return redirect()->back()->withErrors(['message' => '本日はすでに出勤済みです']);
+        }
+
         Attendance::create([
             'user_id' => auth()->id(),
             'date' => $now->format('Y-m-d'),

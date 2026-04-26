@@ -6,7 +6,6 @@
 
 @section('content')
 <div>
-    
     @if(session('work_status') == '出勤中')
     <p>出勤中</p>
     @elseif(session('work_status') == '休憩中')
@@ -43,6 +42,9 @@
     <button>出勤</button>
 </form>
 @endif
+@error('message')
+<p>{{ $message }}</p>
+@enderror
 
 
 
