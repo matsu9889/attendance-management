@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Attendance;
+use App\Models\BreakRecord;
 
 class AttendanceController extends Controller
 {
@@ -19,6 +20,7 @@ class AttendanceController extends Controller
         return view('attendance.create', compact('date', 'time'));
     }
 
+    // 出勤登録機能
     public function clockIn(Request $request)
     {
         $now = new Carbon();
@@ -36,6 +38,7 @@ class AttendanceController extends Controller
         return view('attendance.create', compact('date', 'time'));
     }
 
+    // 退勤機能
     public function clockOut(Request $request)
     {
         $now = new Carbon();
@@ -48,6 +51,7 @@ class AttendanceController extends Controller
         return view('attendance.create', compact('date', 'time'));
     }
 
+    // 休憩入機能
     public function breakIn(Request $request)
     {
         $now = new Carbon();
@@ -56,10 +60,21 @@ class AttendanceController extends Controller
         $date = $date . '(' . $weekday[$now->dayOfWeek] . ')';
         $time = $now->format('H:i');
 
+        $attendance = Attendance::where('user_id', auth()->id())
+            ->where('date', $now->format('Y-m-d'))
+            ->first();
+
+        BreakRecord::create([
+            'attendance_id' => $attendance->id,
+            'start_time' => $now->format('H:i'),
+            'end_time' => NULL,
+        ]);
+
         $request->session()->put('work_status', '休憩中');
         return view('attendance.create', compact('date', 'time'));
     }
 
+    // 休憩戻機能
     public function breakOut(Request $request)
     {
         $now = new Carbon();
@@ -67,6 +82,16 @@ class AttendanceController extends Controller
         $date = $now->format('Y年m月d日');
         $date = $date . '(' . $weekday[$now->dayOfWeek] . ')';
         $time = $now->format('H:i');
+
+        $attendance = Attendance::where('user_id', auth()->id())
+            ->where('date', $now->format('Y-m-d'))
+            ->first();
+
+        BreakRecord::where('attendance_id', $attendance->id,)
+            ->whereNull('end_time')
+            ->update([
+                'end_time' => $now->format('H:i'),
+            ]);
 
         $request->session()->put('work_status', '出勤中');
         return view('attendance.create', compact('date', 'time'));
