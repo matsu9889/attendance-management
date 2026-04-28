@@ -120,8 +120,24 @@ class AttendanceController extends Controller
             ->with('breakRecord')
             ->get();
 
-        $dif = Carbon::parse($break->end_time)->diffInMinutes(Carbon::parse($break->start_time));
-        $breakrecord = $attendance->breakRecord->sum($dif);
+        foreach ($attendances as $attendance) {
+            $work_minutes = Carbon::parse($attendance->end_time)->diffInMinutes(Carbon::parse($attendance->start_time));
+            $breakrecord = 0;
+            foreach ($attendance->breakRecord as $break) {
+                $break_minutes = Carbon::parse($break->end_time)->diffInMinutes(Carbon::parse($break->start_time));
+                $breakrecord = $breakrecord + $break_minutes;
+            }
+            $attendance->break_total = $breakrecord;
+            $total_minutes = $work_minutes - $breakrecord;
+            $attendance->work_total = $total_minutes;
+        }
+
+        $attendance->date = Carbon::parse($attendance->date)->isoFormat('MM/DD(ddd)');
+        $attendance->start_time = Carbon::parse($attendance->start_time)->format('H:i');
+        $attendance->end_time = Carbon::parse($attendance->end_time)->format('H:i');
+        $attendance->break_total = Carbon::parse($attendance->break_total)->format('H:i');
+        $attendance->work_total = Carbon::parse($attendance->work_total)->format('H:i');
+
         return view('attendance.index', compact('attendances'));
     }
 }
