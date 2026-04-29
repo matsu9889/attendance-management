@@ -13,12 +13,12 @@ class AttendanceController extends Controller
     {
         $now = new Carbon();
 
-        $weekday = ['日', '月', '火', '水', '木', '金', '土'];
-        $date = $now->format('Y年m月d日');
-        $date = $date . '(' . $weekday[$now->dayOfWeek] . ')';
+        // $weekday = ['日', '月', '火', '水', '木', '金', '土'];
+        //$date = $now->format('Y年m月d日');
+        //$date = $date . '(' . $weekday[$now->dayOfWeek] . ')';
+        $date = $now->isoFormat('YYYY年MM月DD日(ddd)');
         $time = $now->format('H:i');
-        $date2 = $now->isoFormat('YYYY年MM月DD日(ddd)'); //追加してみた。あとで整理
-        return view('attendance.create', compact('date', 'time', 'date2'));
+        return view('attendance.create', compact('date', 'time'));
     }
 
     // 出勤登録機能
