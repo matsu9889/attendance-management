@@ -130,14 +130,18 @@ class AttendanceController extends Controller
             $attendance->break_total = $breakrecord;
             $total_minutes = $work_minutes - $breakrecord;
             $attendance->work_total = $total_minutes;
+
+            $breakhour = floor($attendance->break_total / 60);
+            $breakminutes = floor($attendance->break_total % 60);
+            $workhour = floor($attendance->work_total / 60);
+            $workminutes = floor($attendance->work_total % 60);
+
+            $attendance->date = Carbon::parse($attendance->date)->isoFormat('MM/DD(ddd)');
+            $attendance->start_time = Carbon::parse($attendance->start_time)->format('H:i');
+            $attendance->end_time = Carbon::parse($attendance->end_time)->format('H:i');
+            $attendance->break_total = $breakhour . ':' . str_pad($breakminutes, 2, '0', STR_PAD_LEFT);
+            $attendance->work_total = $workhour . ':' . str_pad($workminutes, 2, '0', STR_PAD_LEFT);
         }
-
-        $attendance->date = Carbon::parse($attendance->date)->isoFormat('MM/DD(ddd)');
-        $attendance->start_time = Carbon::parse($attendance->start_time)->format('H:i');
-        $attendance->end_time = Carbon::parse($attendance->end_time)->format('H:i');
-        $attendance->break_total = Carbon::parse($attendance->break_total)->format('H:i');
-        $attendance->work_total = Carbon::parse($attendance->work_total)->format('H:i');
-
         return view('attendance.index', compact('attendances'));
     }
 }
