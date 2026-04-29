@@ -114,6 +114,7 @@ class AttendanceController extends Controller
         return view('attendance.create', compact('date', 'time'));
     }
 
+    // 勤怠一覧画面
     public function index()
     {
         $attendances = Attendance::where('user_id', auth()->id())
