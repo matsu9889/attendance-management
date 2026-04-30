@@ -9,9 +9,18 @@
     <div class="container">
         <h1 class="title">勤怠一覧</h1>
         <div class="month">
-            <a class="month__link" href="">前月</a>
-            <p>今月</p>
-            <a class="month__link" href="">翌月</a>
+            <a class="month__link" href="">
+                <img class="left-arrow" src="{{ asset('images/矢印.png') }}" alt="矢印">
+                前月
+            </a>
+            <div>
+                <img class="calendar" src="{{ asset('images/カレンダー.png') }}" alt="カレンダー">
+                <p class="this-month">今月</p>
+            </div>
+            <a class="month__link" href="">
+                翌月
+                <img class="right-arrow" src="{{ asset('images/矢印.png') }}" alt="矢印">
+            </a>
         </div>
 
         <table class="table">
