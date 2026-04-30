@@ -18,7 +18,6 @@
         @endif
     </div>
     <div>
-        <!-- <p class="date">{{$date}}</p> -->
         <p class="date">{{$date}}</p>
         <p class="time">{{$time}}</p>
     </div>

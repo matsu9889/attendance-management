@@ -9,26 +9,31 @@ use App\Models\BreakRecord;
 
 class AttendanceController extends Controller
 {
-    public function create()
+    // 時間取得
+    public function getTime()
     {
         $now = new Carbon();
-
-        // $weekday = ['日', '月', '火', '水', '木', '金', '土'];
-        //$date = $now->format('Y年m月d日');
-        //$date = $date . '(' . $weekday[$now->dayOfWeek] . ')';
         $date = $now->isoFormat('YYYY年MM月DD日(ddd)');
         $time = $now->format('H:i');
+        return ['now' => $now, 'date' => $date, 'time' => $time];
+    }
+
+    // 勤怠登録画面表示
+    public function create()
+    {
+        $result = $this->getTime();
+        $date = $result['date'];
+        $time = $result['time'];
         return view('attendance.create', compact('date', 'time'));
     }
 
     // 出勤登録機能
     public function clockIn(Request $request)
     {
-        $now = new Carbon();
-        $weekday = ['日', '月', '火', '水', '木', '金', '土'];
-        $date = $now->format('Y年m月d日');
-        $date = $date . '(' . $weekday[$now->dayOfWeek] . ')';
-        $time = $now->format('H:i');
+        $result = $this->getTime();
+        $now = $result['now'];
+        $date = $result['date'];
+        $time = $result['time'];
 
         $exists = Attendance::where('user_id', auth()->id())
             ->where('date', $now->format('Y-m-d'))
@@ -52,11 +57,10 @@ class AttendanceController extends Controller
     // 退勤機能
     public function clockOut(Request $request)
     {
-        $now = new Carbon();
-        $weekday = ['日', '月', '火', '水', '木', '金', '土'];
-        $date = $now->format('Y年m月d日');
-        $date = $date . '(' . $weekday[$now->dayOfWeek] . ')';
-        $time = $now->format('H:i');
+        $result = $this->getTime();
+        $now = $result['now'];
+        $date = $result['date'];
+        $time = $result['time'];
 
         Attendance::where('user_id', auth()->id(),)
             ->whereNull('end_time')
@@ -71,11 +75,10 @@ class AttendanceController extends Controller
     // 休憩入機能
     public function breakIn(Request $request)
     {
-        $now = new Carbon();
-        $weekday = ['日', '月', '火', '水', '木', '金', '土'];
-        $date = $now->format('Y年m月d日');
-        $date = $date . '(' . $weekday[$now->dayOfWeek] . ')';
-        $time = $now->format('H:i');
+        $result = $this->getTime();
+        $now = $result['now'];
+        $date = $result['date'];
+        $time = $result['time'];
 
         $attendance = Attendance::where('user_id', auth()->id())
             ->where('date', $now->format('Y-m-d'))
@@ -94,11 +97,10 @@ class AttendanceController extends Controller
     // 休憩戻機能
     public function breakOut(Request $request)
     {
-        $now = new Carbon();
-        $weekday = ['日', '月', '火', '水', '木', '金', '土'];
-        $date = $now->format('Y年m月d日');
-        $date = $date . '(' . $weekday[$now->dayOfWeek] . ')';
-        $time = $now->format('H:i');
+        $result = $this->getTime();
+        $now = $result['now'];
+        $date = $result['date'];
+        $time = $result['time'];
 
         $attendance = Attendance::where('user_id', auth()->id())
             ->where('date', $now->format('Y-m-d'))
