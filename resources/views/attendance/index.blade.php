@@ -9,15 +9,15 @@
     <div class="container">
         <h1 class="title">勤怠一覧</h1>
         <div class="month">
-            <a class="month__link" href="">
+            <a class="month__link" href="{{$subMonth}}">
                 <img class="left-arrow" src="{{ asset('images/矢印.png') }}" alt="矢印">
                 前月
             </a>
             <div>
                 <img class="calendar" src="{{ asset('images/カレンダー.png') }}" alt="カレンダー">
-                <p class="this-month">今月</p>
+                <p class="this-month">{{$thisMonth}}</p>
             </div>
-            <a class="month__link" href="">
+            <a class="month__link" href="{{$addMonth}}">
                 翌月
                 <img class="right-arrow" src="{{ asset('images/矢印.png') }}" alt="矢印">
             </a>

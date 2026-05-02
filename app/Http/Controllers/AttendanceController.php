@@ -13,9 +13,11 @@ class AttendanceController extends Controller
     public function getTime()
     {
         $now = new Carbon();
+        $year = $now->format('Y');
+        $month = $now->format('m');
         $date = $now->isoFormat('YYYY年MM月DD日(ddd)');
         $time = $now->format('H:i');
-        return ['now' => $now, 'date' => $date, 'time' => $time];
+        return ['now' => $now, 'year' => $year, 'month' => $month, 'date' => $date, 'time' => $time];
     }
 
     // 勤怠登録画面表示
@@ -120,9 +122,18 @@ class AttendanceController extends Controller
     public function index()
     {
         $result = $this->getTime();
-        $date = $result['date'];
-        $start = $result['now']->copy()->startOfMonth();
-        $end = $result['now']->copy()->endOfMonth();
+        // $date = $result['date'];
+
+        $year = request('year') ?? $result['year'];
+        $month = request('month') ?? $result['month'];
+        $currentMonth = Carbon::create($year, $month, 1);
+
+        $start = $currentMonth->copy()->startOfMonth();
+        $end = $currentMonth->copy()->endOfMonth();
+
+        $subMonth = $currentMonth->copy()->subMonths(1);
+        $thisMonth = $currentMonth->copy()->format('Y/m');
+        $addMonth = $currentMonth->copy()->addMonths(1);
 
         $days = [];
         $current = $start->copy();
@@ -157,7 +168,6 @@ class AttendanceController extends Controller
 
                 $work_total = $work_minutes - $break_total;
 
-                // フォーマット
                 $attendance->start_time = Carbon::parse($attendance->start_time)->format('H:i');
                 $attendance->end_time = Carbon::parse($attendance->end_time)->format('H:i');
 
@@ -170,6 +180,6 @@ class AttendanceController extends Controller
                 $attendance->work_total = null;
             }
         }
-        return view('attendance.index', compact('attendances', 'days'));
+        return view('attendance.index', compact('attendances', 'days', 'thisMonth', 'subMonth', 'addMonth'));
     }
 }
