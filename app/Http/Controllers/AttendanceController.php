@@ -119,32 +119,57 @@ class AttendanceController extends Controller
     // 勤怠一覧画面
     public function index()
     {
+        $result = $this->getTime();
+        $date = $result['date'];
+        $start = $result['now']->copy()->startOfMonth();
+        $end = $result['now']->copy()->endOfMonth();
+
+        $days = [];
+        $current = $start->copy();
+
+        while ($current->lte($end)) {
+            $days[] = [
+                'key' => $current->format('Y-m-d'),      // 照合用
+                'label' => $current->isoFormat('MM/DD(ddd)'), // 表示用
+            ];
+            $current->addDay();
+        }
+
         $attendances = Attendance::where('user_id', auth()->id())
             ->with('breakRecord')
-            ->get();
+            ->whereBetween('date', [$start, $end])
+            ->get()
+            ->keyBy('date');
 
         foreach ($attendances as $attendance) {
-            $work_minutes = Carbon::parse($attendance->end_time)->diffInMinutes(Carbon::parse($attendance->start_time));
-            $breakrecord = 0;
-            foreach ($attendance->breakRecord as $break) {
-                $break_minutes = Carbon::parse($break->end_time)->diffInMinutes(Carbon::parse($break->start_time));
-                $breakrecord = $breakrecord + $break_minutes;
+            if ($attendance->start_time && $attendance->end_time) {
+                $work_minutes = Carbon::parse($attendance->end_time)
+                    ->diffInMinutes(Carbon::parse($attendance->start_time));
+
+                $break_total = 0;
+
+                foreach ($attendance->breakRecord as $break) {
+                    if ($break->start_time && $break->end_time) {
+                        $break_total += Carbon::parse($break->end_time)
+                            ->diffInMinutes(Carbon::parse($break->start_time));
+                    }
+                }
+
+                $work_total = $work_minutes - $break_total;
+
+                // フォーマット
+                $attendance->start_time = Carbon::parse($attendance->start_time)->format('H:i');
+                $attendance->end_time = Carbon::parse($attendance->end_time)->format('H:i');
+
+                $attendance->break_total = floor($break_total / 60) . ':' . str_pad($break_total % 60, 2, '0', STR_PAD_LEFT);
+                $attendance->work_total = floor($work_total / 60) . ':' . str_pad($work_total % 60, 2, '0', STR_PAD_LEFT);
+            } else {
+                $attendance->start_time = null;
+                $attendance->end_time = null;
+                $attendance->break_total = null;
+                $attendance->work_total = null;
             }
-            $attendance->break_total = $breakrecord;
-            $total_minutes = $work_minutes - $breakrecord;
-            $attendance->work_total = $total_minutes;
-
-            $breakhour = floor($attendance->break_total / 60);
-            $breakminutes = floor($attendance->break_total % 60);
-            $workhour = floor($attendance->work_total / 60);
-            $workminutes = floor($attendance->work_total % 60);
-
-            $attendance->date = Carbon::parse($attendance->date)->isoFormat('MM/DD(ddd)');
-            $attendance->start_time = Carbon::parse($attendance->start_time)->format('H:i');
-            $attendance->end_time = Carbon::parse($attendance->end_time)->format('H:i');
-            $attendance->break_total = $breakhour . ':' . str_pad($breakminutes, 2, '0', STR_PAD_LEFT);
-            $attendance->work_total = $workhour . ':' . str_pad($workminutes, 2, '0', STR_PAD_LEFT);
         }
-        return view('attendance.index', compact('attendances'));
+        return view('attendance.index', compact('attendances', 'days'));
     }
 }

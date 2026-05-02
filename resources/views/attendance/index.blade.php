@@ -32,13 +32,14 @@
                 <th class="table__header">合計</th>
                 <th class="table__header">詳細</th>
             </tr>
-            @foreach($attendances as $attendance)
+            @foreach($days as $day)
+            @php $attendance = $attendances->get($day['key']); @endphp
             <tr class="table__description-group">
-                <td class="table__description">{{$attendance->date}}</td>
-                <td class="table__description">{{$attendance->start_time}}</td>
-                <td class="table__description">{{$attendance->end_time}}</td>
-                <td class="table__description">{{$attendance->break_total}}</td>
-                <td class="table__description">{{$attendance->work_total}}</td>
+                <td class="table__description">{{$day['label']}}</td>
+                <td class="table__description">{{ $attendance ? $attendance->start_time : '' }}</td>
+                <td class="table__description">{{ $attendance ? $attendance->end_time : '' }}</td>
+                <td class="table__description">{{ $attendance ? $attendance->break_total : '' }}</td>
+                <td class="table__description">{{ $attendance ? $attendance->work_total : '' }}</td>
                 <td class="table__description"><a class="description-link" href="">詳細</a></td>
             </tr>
             @endforeach
