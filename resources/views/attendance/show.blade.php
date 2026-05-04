@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/attendancelist.css') }}">
+<link rel="stylesheet" href="{{ asset('css/attendanceshow.css') }}">
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
     <div class="container">
         <h1 class="title">勤怠詳細</h1>
         <table class="table">
-            <tr class="">
+            <tr class="table-group">
                 <th class="table__header">名前</th>
                 <td class="table__description"></td>
             </tr>
