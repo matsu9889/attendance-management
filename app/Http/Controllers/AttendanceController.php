@@ -182,4 +182,8 @@ class AttendanceController extends Controller
         }
         return view('attendance.index', compact('attendances', 'days', 'thisMonth', 'subMonth', 'addMonth'));
     }
+
+    public function show ($id){
+        return view('attendance.show',compact('id'));
+    }
 }
