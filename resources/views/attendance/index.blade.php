@@ -40,7 +40,13 @@
                 <td class="table__description">{{ $attendance ? $attendance->end_time : '' }}</td>
                 <td class="table__description">{{ $attendance ? $attendance->break_total : '' }}</td>
                 <td class="table__description">{{ $attendance ? $attendance->work_total : '' }}</td>
-                <td class="table__description"><a class="description-link" href="/attendance/detail/{id}">詳細</a></td>
+                <td class="table__description">
+                    @if($attendance)
+                    <a class="description-link" href="/attendance/detail/{{$attendance->id}}">詳細</a>
+                    @else
+                    <a class="description-link" href="">詳細</a>
+                    @endif
+                </td>
             </tr>
             @endforeach
         </table>
