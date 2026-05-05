@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Attendance;
 use App\Models\BreakRecord;
+use App\Models\User;
 
 class AttendanceController extends Controller
 {
@@ -183,7 +184,15 @@ class AttendanceController extends Controller
         return view('attendance.index', compact('attendances', 'days', 'thisMonth', 'subMonth', 'addMonth'));
     }
 
-    public function show ($id){
-        return view('attendance.show',compact('id'));
+    public function show($id)
+    {
+        $user = auth()->user();
+        $attendance = Attendance::where('user_id', auth()->id())
+            ->where('id', $id)
+            ->with('breakRecord')
+            ->first();
+        $date = Carbon::parse($attendance->date)->isoFormat('YYYY年MM月DD日');
+        
+        return view('attendance.show', compact('id', 'user', 'attendance', 'date'));
     }
 }
