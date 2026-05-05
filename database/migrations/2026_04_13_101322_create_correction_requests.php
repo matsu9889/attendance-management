@@ -17,7 +17,7 @@ return new class extends Migration
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
             $table->string('comment');
-            $table->tinyInteger('approval');
+            $table->tinyInteger('approval')->default(0);
             $table->foreignId('approver_id')->nullable()->constrained('users');
             $table->timestamps();
         });
