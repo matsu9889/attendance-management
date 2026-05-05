@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Attendance;
 use App\Models\BreakRecord;
+use App\Models\CorrectionRequest;
 use App\Models\User;
 
 class AttendanceController extends Controller
@@ -192,7 +193,18 @@ class AttendanceController extends Controller
             ->with('breakRecord')
             ->first();
         $date = Carbon::parse($attendance->date)->isoFormat('YYYY年MM月DD日');
-        
-        return view('attendance.show', compact('id', 'user', 'attendance', 'date'));
+        $approval = CorrectionRequest::where('approval', 0)
+            ->where('attendance_id', $attendance->id)
+            ->exists();
+
+
+        return view('attendance.show', compact('id', 'user', 'attendance', 'date', 'approval'));
+    }
+
+    public function correct($id, Request $request)
+    {
+        $form = $request->all();
+        CorrectionRequest::create($form);
+        return view('stamp_correction_request.index',compact('id'));
     }
 }

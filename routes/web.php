@@ -22,4 +22,5 @@ Route::middleware('auth')->group(function () {
     Route::post('/attendance/break-out', [AttendanceController::class, 'breakOut']);
     Route::get('/attendance/list', [AttendanceController::class, 'index']);
     Route::get('/attendance/detail/{id}', [AttendanceController::class, 'show']);
+    Route::post('/attendance/detail/{id}/correct', [AttendanceController::class, 'correct']);
 });
