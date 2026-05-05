@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\Attendance;
 use App\Models\BreakRecord;
 use App\Models\CorrectionRequest;
+use App\Models\CorrectionRequestBreak;
 use App\Models\User;
 
 class AttendanceController extends Controller
@@ -203,8 +204,20 @@ class AttendanceController extends Controller
 
     public function correct($id, Request $request)
     {
-        $form = $request->all();
-        CorrectionRequest::create($form);
-        return view('stamp_correction_request.index',compact('id'));
+        $correctionRequest = CorrectionRequest::create([
+            'attendance_id' => $id,
+            'start_time' => $request->attendance_start_time,
+            'end_time' => $request->attendance_end_time,
+            'comment' => $request->comment,
+        ]);
+
+        foreach ($request->break_start_time as $index => $start) {
+            CorrectionRequestBreak::create([
+                'correction_request_id' => $correctionRequest->id,
+                'start_time' => $start,
+                'end_time' => $request->break_end_time[$index],
+            ]);
+        }
+        return view('stamp_correction_request.index', compact('id'));
     }
 }
