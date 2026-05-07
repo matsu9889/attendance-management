@@ -9,6 +9,7 @@ use App\Models\BreakRecord;
 use App\Models\CorrectionRequest;
 use App\Models\CorrectionRequestBreak;
 use App\Models\User;
+use App\Http\Requests\AttendanceRequest;
 
 class AttendanceController extends Controller
 {
@@ -202,7 +203,7 @@ class AttendanceController extends Controller
         return view('attendance.show', compact('id', 'user', 'attendance', 'date', 'approval'));
     }
 
-    public function correct($id, Request $request)
+    public function correct($id, AttendanceRequest $request)
     {
         $correctionRequest = CorrectionRequest::create([
             'attendance_id' => $id,
@@ -212,11 +213,12 @@ class AttendanceController extends Controller
         ]);
 
         foreach ($request->break_start_time as $index => $start) {
-            CorrectionRequestBreak::create([
-                'correction_request_id' => $correctionRequest->id,
-                'start_time' => $start,
-                'end_time' => $request->break_end_time[$index],
-            ]);
+            if ($start != NULL)
+                CorrectionRequestBreak::create([
+                    'correction_request_id' => $correctionRequest->id,
+                    'start_time' => $start,
+                    'end_time' => $request->break_end_time[$index],
+                ]);
         }
         return view('stamp_correction_request.index', compact('id'));
     }
