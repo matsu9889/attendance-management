@@ -24,6 +24,9 @@
                     <td class="table__description"><input type="text" name="attendance_start_time" value="{{$attendance->start_time}}"></td>
                     <td>～</td>
                     <td class="table__description"><input type="text" name="attendance_end_time" value="{{$attendance->end_time}}"></td>
+                    @error('message')
+                    <p>{{ $message }}</p>
+                    @enderror
                 </tr>
                 @foreach($attendance->breakRecord as $breakRecord)
                 <tr>
@@ -31,6 +34,9 @@
                     <td class="table__description"><input type="text" name="break_start_time[]" value="{{$breakRecord->start_time}}"></td>
                     <td>～</td>
                     <td class="table__description"><input type="text" name="break_end_time[]" value="{{$breakRecord->end_time}}"></td>
+                    @error('message')
+                    <p>{{ $message }}</p>
+                    @enderror
                 </tr>
                 @endforeach
                 <tr>
@@ -38,10 +44,16 @@
                     <td class="table__description"><input type="text" name="break_start_time[]" value=""></td>
                     <td>～</td>
                     <td class="table__description"><input type="text" name="break_end_time[]" value=""></td>
+                    @error('message')
+                    <p>{{ $message }}</p>
+                    @enderror
                 </tr>
                 <tr>
                     <th class="table__header">備考</th>
                     <td class="table__description"><textarea name="comment" id=""></textarea></td>
+                    @error('message')
+                    <p>{{ $message }}</p>
+                    @enderror
                 </tr>
             </table>
             @if($approval == true)
