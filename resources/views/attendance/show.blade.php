@@ -7,75 +7,73 @@
 @section('content')
 <div class="content-wrapper">
     <div class="container">
+        <h1 class="title">勤怠詳細</h1>
         <form action="/attendance/detail/{{$id}}/correct" method="post">
             @csrf
-            <h1 class="title">勤怠詳細</h1>
-            <table class="table">
-                <tr class="table-group">
-                    <th class="table__header">名前</th>
-                    <td class="table__description">{{$user->name}}</td>
-                </tr>
-                <tr>
-                    <th class="table__header">日付</th>
-                    <td class="table__description">{{$date}}</td>
-                </tr>
-                <tr>
-                    <th class="table__header">出勤・退勤</th>
-                    <td class="table__description"><input type="text" name="attendance_start_time" value="{{$attendance->start_time}}"></td>
-                    <td>～</td>
-                    <td class="table__description"><input type="text" name="attendance_end_time" value="{{$attendance->end_time}}"></td>
-                </tr>
-                <tr>
-                    <td>
+            <div class="form">
+                <div class="label-group">
+                    <label class="label" for="name">名前</label>
+                    <div class="text">{{$user->name}}</div>
+                </div>
+                <div class="label-group">
+                    <label class="label" for="date">日付</label>
+                    <div class="text">{{$date}}</div>
+                </div>
+                <div class="label-group">
+                    <label class="label" for="attendance">出勤・退勤</label>
+                    <div class="input-group">
+                        <div>
+                            <input class="input" type="text" name="attendance_start_time" id="attendance" value="{{$attendance->start_time}}">
+                        </div>
+                        <span>～</span>
+                        <div>
+                            <input class="input" type="text" name="attendance_end_time" id="attendance" value="{{$attendance->end_time}}">
+                        </div>
                         @if($errors->has('attendance_start_time') || $errors->has('attendance_end_time'))
                         <p>出勤時間もしくは退勤時間が不適切な値です</p>
                         @endif
-                    </td>
-                </tr>
+                    </div>
+                </div>
                 @foreach($attendance->breakRecord as $breakRecord)
-                <tr>
-                    <th class="table__header">休憩{{ $loop->iteration == 1 ? '' : $loop->iteration }}</th>
-                    <td class="table__description"><input type="text" name="break_start_time[]" value="{{$breakRecord->start_time}}"></td>
-                    <td>～</td>
-                    <td class="table__description"><input type="text" name="break_end_time[]" value="{{$breakRecord->end_time}}"></td>
-                </tr>
-                <tr>
-                    <td>
+                <div class="label-group">
+                    <label class="label" for="break">休憩{{ $loop->iteration == 1 ? '' : $loop->iteration }}</label>
+                    <div class="input-group">
+                        <input class="input" type="text" name="break_start_time[]" id="break" value="{{$breakRecord->start_time}}">
+                        <span>～</span>
+                        <input class="input" type="text" name="break_end_time[]" id="break" value="{{$breakRecord->end_time}}">
                         @if($errors->has('break_start_time.*') || $errors->has('break_end_time.*'))
                         <p>休憩時間が不適切な値です</p>
                         @endif
-                    </td>
-                </tr>
+                    </div>
+                </div>
                 @endforeach
-                <tr>
-                    <th class="table__header">休憩{{ $attendance->breakRecord->count() == 0 ? '' : $attendance->breakRecord->count()+1 }}</th>
-                    <td class="table__description"><input type="text" name="break_start_time[]" value=""></td>
-                    <td>～</td>
-                    <td class="table__description"><input type="text" name="break_end_time[]" value=""></td>
-                </tr>
-                <tr>
-                    <td>
+                <div class="label-group">
+                    <label class="label" for="break">休憩{{ $attendance->breakRecord->count() == 0 ? '' : $attendance->breakRecord->count()+1 }}</label>
+                    <div class="input-group">
+                        <input class="input" type="text" name="break_start_time[]" id="break" value="">
+                        <span>～</span>
+                        <input class="input" type="text" name="break_end_time[]" id="break" value="">
                         @if($errors->has('break_start_time.*') || $errors->has('break_end_time.*'))
                         <p>休憩時間が不適切な値です</p>
                         @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th class="table__header">備考</th>
-                    <td class="table__description"><textarea name="comment" id=""></textarea></td>
-                </tr>
-                <tr>
-                    <td>
-                        @error('comment')
-                        <p>{{ $message }}</p>
-                        @enderror
-                    </td>
-                </tr>
-            </table>
+                    </div>
+                </div>
+                <div class="label-group">
+                    <label class="label" for="comment">備考</label>
+                    <div class="input-group">
+                        <textarea class="textarea" name="comment" id="comment"></textarea>
+                        <div>
+                            @error('comment')
+                            <p>{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+            </div>
             @if($approval == true)
             <p>*承認待ちのため修正はできません。</p>
             @else
-            <button>修正</button>
+            <button class="button">修正</button>
             @endif
         </form>
     </div>

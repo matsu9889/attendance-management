@@ -198,8 +198,6 @@ class AttendanceController extends Controller
         $approval = CorrectionRequest::where('approval', 0)
             ->where('attendance_id', $attendance->id)
             ->exists();
-
-
         return view('attendance.show', compact('id', 'user', 'attendance', 'date', 'approval'));
     }
 
