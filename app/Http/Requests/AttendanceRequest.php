@@ -22,8 +22,8 @@ class AttendanceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'attendance_start_time' => 'required|date_format:H:i|before:attendance_end_time',
-            'attendance_end_time' => 'required|date_format:H:i|after:attendance_start_time',
+            'attendance_start_time' => 'required|date_format:H:i:s|before:attendance_end_time',
+            'attendance_end_time' => 'required|date_format:H:i:s|after:attendance_start_time',
             'break_start_time.*' => 'after:attendance_start_time|before:attendance_end_time',
             'break_end_time.*' => 'before:attendance_end_time',
             'comment' => 'required',

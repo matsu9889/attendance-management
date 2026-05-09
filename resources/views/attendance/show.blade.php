@@ -24,9 +24,13 @@
                     <td class="table__description"><input type="text" name="attendance_start_time" value="{{$attendance->start_time}}"></td>
                     <td>～</td>
                     <td class="table__description"><input type="text" name="attendance_end_time" value="{{$attendance->end_time}}"></td>
-                    @error('message')
-                    <p>{{ $message }}</p>
-                    @enderror
+                </tr>
+                <tr>
+                    <td>
+                        @if($errors->has('attendance_start_time') || $errors->has('attendance_end_time'))
+                        <p>出勤時間もしくは退勤時間が不適切な値です</p>
+                        @endif
+                    </td>
                 </tr>
                 @foreach($attendance->breakRecord as $breakRecord)
                 <tr>
@@ -34,9 +38,13 @@
                     <td class="table__description"><input type="text" name="break_start_time[]" value="{{$breakRecord->start_time}}"></td>
                     <td>～</td>
                     <td class="table__description"><input type="text" name="break_end_time[]" value="{{$breakRecord->end_time}}"></td>
-                    @error('message')
-                    <p>{{ $message }}</p>
-                    @enderror
+                </tr>
+                <tr>
+                    <td>
+                        @if($errors->has('break_start_time.*') || $errors->has('break_end_time.*'))
+                        <p>休憩時間が不適切な値です</p>
+                        @endif
+                    </td>
                 </tr>
                 @endforeach
                 <tr>
@@ -44,16 +52,24 @@
                     <td class="table__description"><input type="text" name="break_start_time[]" value=""></td>
                     <td>～</td>
                     <td class="table__description"><input type="text" name="break_end_time[]" value=""></td>
-                    @error('message')
-                    <p>{{ $message }}</p>
-                    @enderror
+                </tr>
+                <tr>
+                    <td>
+                        @if($errors->has('break_start_time.*') || $errors->has('break_end_time.*'))
+                        <p>休憩時間が不適切な値です</p>
+                        @endif
+                    </td>
                 </tr>
                 <tr>
                     <th class="table__header">備考</th>
                     <td class="table__description"><textarea name="comment" id=""></textarea></td>
-                    @error('message')
-                    <p>{{ $message }}</p>
-                    @enderror
+                </tr>
+                <tr>
+                    <td>
+                        @error('comment')
+                        <p>{{ $message }}</p>
+                        @enderror
+                    </td>
                 </tr>
             </table>
             @if($approval == true)
