@@ -71,9 +71,11 @@
                 </div>
             </div>
             @if($approval == true)
-            <p>*承認待ちのため修正はできません。</p>
+            <p class="message">*承認待ちのため修正はできません。</p>
             @else
-            <button class="button">修正</button>
+            <div class="button-area">
+                <button class="button">修正</button>
+            </div>
             @endif
         </form>
     </div>

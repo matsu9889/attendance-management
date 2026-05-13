@@ -76,6 +76,11 @@
     border-radius: 5px;
 }
 
+.message {
+    color: #FF0000;
+    text-align: right;
+}
+
 .button-area {
     text-align: right;
 }
