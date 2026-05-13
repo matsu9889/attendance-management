@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Models\Attendance;
 use App\Models\BreakRecord;
 use App\Models\CorrectionRequest;
@@ -15,13 +16,24 @@ class StampCorrectionRequestController extends Controller
     {
         $attendance = Attendance::where('user_id', auth()->id())
             ->pluck('id');
-        $pending = CorrectionRequest::whereIn('attendance_id', $attendance)
+        $pendings = CorrectionRequest::whereIn('attendance_id', $attendance)
             ->where('approval', 0)
             ->get();
-        $approved = CorrectionRequest::whereIn('attendance_id', $attendance)
+        $approveds = CorrectionRequest::whereIn('attendance_id', $attendance)
             ->where('approval', 1)
             ->get();
 
-        return view('stamp_correction_request.index', compact('pending', 'approved'));
+        $approvalMap = [
+            '0' => '承認待ち',
+            '1' => '承認済み',
+            '2' => '却下'
+        ];
+
+        foreach ($pendings as $pending) {
+            $pending->approval = $approvalMap[$pending->approval];
+            $pending->attendance->date = Carbon::parse($pending->attendance->date)->isoFormat('YYYY/MM/DD');
+        }
+
+        return view('stamp_correction_request.index', compact('pendings', 'approveds'));
     }
 }
