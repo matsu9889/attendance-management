@@ -34,6 +34,11 @@ class StampCorrectionRequestController extends Controller
             $pending->attendance->date = Carbon::parse($pending->attendance->date)->isoFormat('YYYY/MM/DD');
         }
 
+        foreach ($approveds as $approved) {
+            $approved->approval = $approvalMap[$approved->approval];
+            $approved->attendance->date = Carbon::parse($approved->attendance->date)->isoFormat('YYYY/MM/DD');
+        }
+
         return view('stamp_correction_request.index', compact('pendings', 'approveds'));
     }
 }

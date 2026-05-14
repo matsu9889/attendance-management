@@ -34,14 +34,16 @@
             </tr>
             @endforeach
             <!-- 承認済み -->
+            @foreach($approveds as $approved)
             <tr class="table__description-group">
-                <td class="table__description"></td>
-                <td class="table__description"></td>
-                <td class="table__description"></td>
-                <td class="table__description"></td>
-                <td class="table__description"></td>
-                <td><a class="description-link" href="">詳細</a></td>
+                <td class="table__description">{{$approved->approval}}</td>
+                <td class="table__description">{{$approved->attendance->user->name}}</td>
+                <td class="table__description">{{$approved->attendance->date}}</td>
+                <td class="table__description">{{$approved->comment}}</td>
+                <td class="table__description">{{$approved->created_at->isoFormat('YYYY/MM/DD')}}</td>
+                <td><a class="description-link" href="/attendance/detail/{{$approved->id}}">詳細</a></td>
             </tr>
+            @endforeach
         </table>
     </div>
 </div>
