@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\StampCorrectionRequestController;
+use App\Http\Controllers\Admin\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +27,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/attendance/detail/{id}/correct', [AttendanceController::class, 'correct']);
     Route::get('/stamp_correction_request/list',[StampCorrectionRequestController::class,'index']);
 });
+
+Route::get('/admin/login', [AuthController::class, 'index'])->middleware('guest');
+
