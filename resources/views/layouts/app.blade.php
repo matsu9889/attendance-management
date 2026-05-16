@@ -20,6 +20,7 @@
 
         <ul class="header-nav">
             @auth
+            @if(Auth::user()->role == 0)
             <li class="header-nav__item">
                 <a class="header-nav__link" href="/attendance">勤怠</a>
             </li>
@@ -35,6 +36,23 @@
                     <button class="header-nav__button">ログアウト</button>
                 </form>
             </li>
+            @elseif(Auth::user()->role == 1)
+            <li class="header-nav__item">
+                <a class="header-nav__link" href="/admin/attendance/list">勤怠一覧</a>
+            </li>
+            <li class="header-nav__item">
+                <a class="header-nav__link" href="/admin/staff/list">スタッフ一覧</a>
+            </li>
+            <li class="header-nav__item">
+                <a class="header-nav__link" href="/stamp_correction_request/list">申請一覧</a>
+            </li>
+            <li class="header-nav__item">
+                <form action="/logout" method="post">
+                    @csrf
+                    <button class="header-nav__button">ログアウト</button>
+                </form>
+            </li>
+            @endif
             @else
             <li>
                 <a href="/login">
