@@ -52,9 +52,9 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->instance(LoginResponse::class, new class implements LoginResponse {
             public function toResponse($request)
             {
-                if(Auth::user()->role == 0){
+                if (Auth::user()->role == 0) {
                     return redirect('/attendance');
-                }elseif(Auth::user()->role == 1){
+                } elseif (Auth::user()->role == 1) {
                     return redirect('/admin/attendance/list');
                 }
             }
@@ -66,7 +66,6 @@ class FortifyServiceProvider extends ServiceProvider
                 return redirect('/login');
             }
         });
-
 
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
