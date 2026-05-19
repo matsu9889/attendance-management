@@ -22,13 +22,15 @@ class AttendanceController extends Controller
         $yesterday = $currentDay->copy()->subDay();
         $tomorrow = $currentDay->copy()->addDay();
 
-        $date = $currentDay->format('Y/m/d');
+        $dateTitle = $currentDay->format('Y年n月j日');
+        $dateLabel = $currentDay->format('Y/m/d');
 
-        $attendances = Attendance::where('date', $date)
-            ->with('breakRecord')
+        $attendances = Attendance::where('date', $currentDay)
+            ->with('breakRecord', 'user')
             ->get();
 
         foreach ($attendances as $attendance) {
+            $attendance->user_name = $attendance->user->name;
             if ($attendance->start_time && $attendance->end_time) {
                 $work_minutes = Carbon::parse($attendance->end_time)
                     ->diffInMinutes(Carbon::parse($attendance->start_time));
@@ -56,6 +58,6 @@ class AttendanceController extends Controller
                 $attendance->work_total = null;
             }
         }
-        return view('admin.attendance.index', compact('date', 'yesterday', 'tomorrow', 'attendances'));
+        return view('admin.attendance.index', compact('dateTitle', 'dateLabel', 'yesterday', 'tomorrow', 'attendances'));
     }
 }

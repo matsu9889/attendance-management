@@ -7,7 +7,7 @@
 @section('content')
 <div class="content-wrapper">
     <div class="container">
-        <h1 class="title">申請一覧</h1>
+        <h1 class="title">{{$dateTitle}}の勤怠</h1>
         <div class="month">
             <a class="month__link" href="/admin/attendance/list?year={{ $yesterday->format('Y') }}&month={{ $yesterday->format('m') }}&day={{ $yesterday->format('d') }}">
                 <img class="left-arrow" src="{{ asset('images/矢印.png') }}" alt="矢印">
@@ -15,7 +15,7 @@
             </a>
             <div>
                 <img class="calendar" src="{{ asset('images/カレンダー.png') }}" alt="カレンダー">
-                <p class="this-month">{{$date}}</p>
+                <p class="this-month">{{$dateLabel}}</p>
             </div>
             <a class="month__link" href="/admin/attendance/list?year={{ $tomorrow->format('Y') }}&month={{ $tomorrow->format('m') }}&day={{ $tomorrow->format('d') }}">
                 翌日
@@ -34,7 +34,7 @@
             </tr>
             @foreach($attendances as $attendance)
             <tr class="table__description-group">
-                <td class="table__description">{{$attendance->user_id}}</td>
+                <td class="table__description">{{$attendance->user_name}}</td>
                 <td class="table__description">{{$attendance->start_time}}</td>
                 <td class="table__description">{{$attendance->end_time}}</td>
                 <td class="table__description">{{$attendance->break_total}}</td>
