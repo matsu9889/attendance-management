@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Attendance;
+use App\Models\CorrectionRequest;
 
 
 class AttendanceController extends Controller
@@ -59,5 +60,28 @@ class AttendanceController extends Controller
             }
         }
         return view('admin.attendance.index', compact('dateTitle', 'dateLabel', 'yesterday', 'tomorrow', 'attendances'));
+    }
+
+    public function show($id)
+    {
+        $attendance = Attendance::where('id', $id)
+            ->with('breakRecord')
+            ->first();
+
+        $user_name = $attendance->user->name;
+        $date = Carbon::parse($attendance->date)->isoFormat('YYYY年M月D日');
+
+        $attendance->start_time = Carbon::parse($attendance->start_time)->format('H:i');
+        $attendance->end_time = Carbon::parse($attendance->end_time)->format('H:i');
+
+        foreach ($attendance->breakRecord as $break) {
+            $break->start_time = Carbon::parse($break->start_time)->format('H:i');
+            $break->end_time = Carbon::parse($break->end_time)->format('H:i');
+        }
+
+        $approval = CorrectionRequest::where('approval', 0)
+            ->where('attendance_id', $attendance->id)
+            ->exists();
+        return view('admin.attendance.show', compact('id', 'user_name', 'attendance', 'date', 'approval'));
     }
 }

@@ -61,7 +61,7 @@
                 <div class="label-group">
                     <label class="label" for="comment">備考</label>
                     <div class="input-group">
-                        <textarea class="textarea" name="comment" id="comment"></textarea>
+                        <textarea class="textarea" name="comment" id="comment" value=""></textarea>
                         <div>
                             @error('comment')
                             <p>{{ $message }}</p>
