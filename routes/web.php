@@ -33,4 +33,4 @@ Route::middleware('auth')->group(function () {
 Route::get('/admin/login', [AuthController::class, 'index'])->middleware('guest');
 Route::get('/admin/attendance/list', [AdminAttendanceController::class, 'index']);
 Route::get('/admin/attendance/{id}', [AdminAttendanceController::class, 'show']);
-
+Route::post('/admin/attendance/{id}/correct', [AdminAttendanceController::class, 'correct']);
