@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Attendance;
 use App\Models\CorrectionRequest;
-
+use App\Models\CorrectionRequestBreak;
+use App\Http\Requests\AttendanceRequest;
+use App\Models\BreakRecord;
 
 class AttendanceController extends Controller
 {
@@ -83,5 +85,35 @@ class AttendanceController extends Controller
             ->where('attendance_id', $attendance->id)
             ->exists();
         return view('admin.attendance.show', compact('id', 'user_name', 'attendance', 'date', 'approval'));
+    }
+
+    public function correct($id, AttendanceRequest $request)
+    {
+        $attendance = Attendance::find($id);
+        $attendance->update([
+            'start_time' => $request->attendance_start_time,
+            'end_time' => $request->attendance_end_time,
+        ]);
+
+        BreakRecord::where('attendance_id', $id)->delete();
+
+        foreach ($request->break_start_time as $index => $start) {
+            if ($start != null) {
+                BreakRecord::create([
+                    'attendance_id' => $id,
+                    'start_time' => $start,
+                    'end_time' => $request->break_end_time[$index],
+                ]);
+            }
+        }
+
+        CorrectionRequest::create([
+            'attendance_id' => $id,
+            'comment' => $request->comment,
+            'approval' => '1',
+            'approver_id' => auth()->id(),
+        ]);
+
+        return redirect("/admin/attendance/$id");
     }
 }
