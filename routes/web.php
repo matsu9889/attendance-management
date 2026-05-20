@@ -5,7 +5,7 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\StampCorrectionRequestController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\AttendanceController as AdminAttendanceController;
-
+use App\Http\Controllers\Admin\StaffController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,3 +34,4 @@ Route::get('/admin/login', [AuthController::class, 'index'])->middleware('guest'
 Route::get('/admin/attendance/list', [AdminAttendanceController::class, 'index']);
 Route::get('/admin/attendance/{id}', [AdminAttendanceController::class, 'show']);
 Route::post('/admin/attendance/{id}/correct', [AdminAttendanceController::class, 'correct']);
+Route::get('/admin/staff/list', [StaffController::class, 'index']);
