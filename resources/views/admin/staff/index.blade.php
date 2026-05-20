@@ -14,13 +14,15 @@
                 <th class="table__header">メールアドレス</th>
                 <th class="table__header">月次勤怠</th>
             </tr>
+            @foreach($users as $user)
             <tr class="table__description-group">
-                <td class="table__description"></td>
-                <td class="table__description"></td>
+                <td class="table__description">{{$user->name}}</td>
+                <td class="table__description">{{$user->email}}</td>
                 <td class="table__description">
-                    <a class="description-link" href="">詳細</a>
+                    <a class="description-link" href="/admin/attendance/staff/{id}">詳細</a>
                 </td>
             </tr>
+            @endforeach
         </table>
     </div>
 </div>
