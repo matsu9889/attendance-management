@@ -19,7 +19,7 @@
                 <td class="table__description">{{$user->name}}</td>
                 <td class="table__description">{{$user->email}}</td>
                 <td class="table__description">
-                    <a class="description-link" href="/admin/attendance/staff/{id}">詳細</a>
+                    <a class="description-link" href="/admin/attendance/staff/{{$user->id}}">詳細</a>
                 </td>
             </tr>
             @endforeach
