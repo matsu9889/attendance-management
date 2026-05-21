@@ -15,4 +15,12 @@ class StaffController extends Controller
 
         return view('admin.staff.index', compact('users'));
     }
+
+    public function show()
+    {
+        $users = User::where('role', 0)
+            ->get();
+
+        return view('admin.staff.show', compact('users'));
+    }
 }
