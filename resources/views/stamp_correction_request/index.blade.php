@@ -34,7 +34,7 @@
                     @if(auth()->user()->role === 0)
                     <a class="description-link" href="/attendance/detail/{{$pending->id}}">詳細</a>
                     @elseif(auth()->user()->role === 1)
-                    <a class="description-link" href="/stamp_correction_request/approve/{{$pending->id}}">詳細</a>
+                    <a class="description-link" href="/admin/stamp_correction_request/approve/{{$pending->id}}">詳細</a>
                     @endif
                 </td>
             </tr>
@@ -51,7 +51,7 @@
                     @if(auth()->user()->role === 0)
                     <a class="description-link" href="/attendance/detail/{{$approved->id}}">詳細</a>
                     @elseif(auth()->user()->role === 1)
-                    <a class="description-link" href="/stamp_correction_request/approve/{{$approved->id}}">詳細</a>
+                    <a class="description-link" href="/admin/stamp_correction_request/approve/{{$approved->id}}">詳細</a>
                     @endif
                 </td>
             </tr>
