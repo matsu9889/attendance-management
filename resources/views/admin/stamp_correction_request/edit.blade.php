@@ -37,7 +37,7 @@
                 @endforeach
                 <div class="label-group">
                     <label class="label" for="comment">備考</label>
-                    <div class="input-group">{{textarea}}</div>
+                    <div class="input-group">{{$approval->comment}}</div>
                 </div>
             </div>
             <div class="button-area">
