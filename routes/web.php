@@ -6,6 +6,8 @@ use App\Http\Controllers\StampCorrectionRequestController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\AttendanceController as AdminAttendanceController;
 use App\Http\Controllers\Admin\StaffController;
+use App\Http\Controllers\Admin\StampCorrectionRequestController as AdminStampCorrectionRequestController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -38,4 +40,6 @@ Route::middleware('admin')->group(function () {
     Route::post('/admin/attendance/{id}/correct', [AdminAttendanceController::class, 'correct']);
     Route::get('/admin/staff/list', [StaffController::class, 'index']);
     Route::get('/admin/attendance/staff/{id}', [StaffController::class, 'show']);
+    Route::get('/admin/stamp_correction_request/approve/{attendance_correct_request_id}', [AdminStampCorrectionRequestController::class, 'edit']);
+    Route::post('/admin/stamp_correction_request/approve/{attendance_correct_request_id}', [AdminStampCorrectionRequestController::class, 'update']);
 });
