@@ -8,14 +8,21 @@ use App\Models\Attendance;
 use App\Models\BreakRecord;
 use App\Models\CorrectionRequest;
 use App\Models\CorrectionRequestBreak;
+use Illuminate\Support\Facades\Auth;
+
 
 
 class StampCorrectionRequestController extends Controller
 {
     public function index()
     {
-        $attendance = Attendance::where('user_id', auth()->id())
-            ->pluck('id');
+        if (Auth::user()->role === 0) {
+            $attendance = Attendance::where('user_id', auth()->id())
+                ->pluck('id');
+        } elseif (Auth::user()->role === 1) {
+            $attendance = Attendance::pluck('id');
+        }
+
         $pendings = CorrectionRequest::whereIn('attendance_id', $attendance)
             ->where('approval', 0)
             ->get();
