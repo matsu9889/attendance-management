@@ -27,4 +27,9 @@ class CorrectionRequest extends Model
     {
         return $this->belongsTo(User::class, 'approver_id');
     }
+
+    public function breakRecords()
+    {
+        return $this->hasMany(CorrectionRequestBreak::class);
+    }
 }
