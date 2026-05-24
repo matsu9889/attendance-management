@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Attendance;
+use App\Models\BreakRecord;
 use App\Models\CorrectionRequest;
 use App\Models\CorrectionRequestBreak;
 
@@ -33,5 +34,33 @@ class StampCorrectionRequestController extends Controller
         }
 
         return view('admin.stamp_correction_request.edit', compact('id', 'correction_request', 'user_name', 'attendance', 'date',));
+    }
+
+    public function update($id)
+    {
+        $correction_request = CorrectionRequest::with('breakRecords')
+            ->find($id);
+        dd($correction_request);
+
+        $correction_request->update([
+            'approval' => '1'
+        ]);
+        $attendance_id = $correction_request->attendance_id;
+        Attendance::where('id', $attendance_id)
+            ->update([
+                'start_time' => $correction_request->start_time,
+                'end_time' => $correction_request->end_time
+            ]);
+
+        foreach ($correction_request->breakRecords as $breakRecord) {
+            BreakRecord::where('attendance_id', $attendance_id)
+                ->where('correction_request_id', $correction_request->id)
+                ->update([
+                    'start_time' => $breakRecord->start_time,
+                    'end_time' => $breakRecord->end_time
+                ]);
+        }
+
+        return redirect('/stamp_correction_request/list');
     }
 }
