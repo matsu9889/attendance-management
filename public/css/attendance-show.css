@@ -1,5 +1,6 @@
-.content-wrapper {
+body {
     background-color: #eee;
+    min-height: 100vh;
     padding-bottom: 50px;
 }
 
@@ -41,7 +42,6 @@
     padding: 20px;
     font-weight: bold;
     color: #737373;
-    /* align-items: center; */
 }
 
 .text {
@@ -54,22 +54,22 @@
     width: 70%;
     display: flex;
     gap: 30px;
-    /* justify-content: space-between; */
     padding: 20px;
 }
 
-.input{
+.input-time{
     width: 100px;
     font-size: 16px;
     font-weight: bold;
     padding: 5px 10px;
     border: 1px solid #E1E1E1;
     border-radius: 5px;
+    text-align: center;
 }
 
 .textarea {
     height: 100px;
-    width: 100%;
+    width: 300px;
     padding: 5px 10px;
     font-weight: bold;
     border: 1px solid #E1E1E1;
