@@ -52,7 +52,11 @@
                 </div>
             </div>
             <div class="button-area">
+                @if($correction_request->approval === 0)
                 <button class="button">承認</button>
+                @else
+                <button class="button-approval">承認済み</button>
+                @endif
             </div>
         </form>
     </div>
