@@ -24,8 +24,8 @@ class AttendanceRequest extends FormRequest
         return [
             'attendance_start_time' => 'required|date_format:H:i|before:attendance_end_time',
             'attendance_end_time' => 'required|date_format:H:i|after:attendance_start_time',
-            'break_start_time.*' => 'sometimes|nullable|after:attendance_start_time|before:attendance_end_time',
-            'break_end_time.*' => 'sometimes|nullable|before:attendance_end_time',
+            'break_start_time.*' => 'nullable|date_format:H:i|after:attendance_start_time|before:attendance_end_time',
+            'break_end_time.*' => 'nullable|date_format:H:i|before_or_equal:attendance_end_time',
             'comment' => 'required',
         ];
     }
