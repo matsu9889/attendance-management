@@ -36,23 +36,29 @@ class StampCorrectionRequestController extends Controller
         return view('admin.stamp_correction_request.edit', compact('id', 'correction_request', 'user_name', 'attendance', 'date',));
     }
 
-    public function update($id)
+    public function update($attendance_correct_request_id)
     {
         $correction_request = CorrectionRequest::with('breakRecords')
-            ->find($id);
+        ->find($attendance_correct_request_id);
         dd($correction_request);
-
+        
         $correction_request->update([
             'approval' => '1'
         ]);
+
         $attendance_id = $correction_request->attendance_id;
-        Attendance::where('id', $attendance_id)
+        if ($correction_request->start_time !== null) {
+            Attendance::where('id', $attendance_id)
             ->update([
                 'start_time' => $correction_request->start_time,
                 'end_time' => $correction_request->end_time
             ]);
+        }
 
-        foreach ($correction_request->breakRecords as $breakRecord) {
+        $breakRecord = breakRecord::where('attendance_id',$attendance_id);
+        dd($breakRecord);
+
+        foreach ($correction_request->breakRecords as $correctionBreakRecordd) { //休憩修正テーブル
             BreakRecord::where('attendance_id', $attendance_id)
                 ->where('correction_request_id', $correction_request->id)
                 ->update([

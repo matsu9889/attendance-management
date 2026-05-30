@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/attendanceshow.css') }}">
+<link rel="stylesheet" href="{{ asset('css/attendance-show.css') }}">
 @endsection
 
 @section('content')
 <div class="content-wrapper">
     <div class="container">
         <h1 class="title">勤怠詳細</h1>
-        <form action="/admin/stamp_correction_request/approve/{attendance_correct_request_id}" method="post">
+        <form action="/admin/stamp_correction_request/approve/{{$id}}" method="post">
             @csrf
             <div class="form">
                 <div class="label-group">
