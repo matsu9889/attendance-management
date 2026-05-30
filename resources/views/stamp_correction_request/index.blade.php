@@ -8,8 +8,12 @@
 <div class="container">
     <h1 class="title">申請一覧</h1>
     <div class="tag-group">
-        <p class="tag">承認待ち</p>
-        <p class="tag">承認済み</p>
+        <div class="tag">
+            <a href="/stamp_correction_request/list?tab=pending">承認待ち</a>
+        </div>
+        <div class="tag">
+            <a href="/stamp_correction_request/list?tab=approved">承認済み</a>
+        </div>
     </div>
 
     <table class="table">
@@ -21,6 +25,8 @@
             <th class="table__header">申請日時</th>
             <th class="table__header">詳細</th>
         </tr>
+
+        @if($tab === 'pending')
         <!-- 承認待ち -->
         @foreach($pendings as $pending)
         <tr class="table__description-group">
@@ -38,6 +44,7 @@
             </td>
         </tr>
         @endforeach
+        @elseif($tab === 'approved')
         <!-- 承認済み -->
         @foreach($approveds as $approved)
         <tr class="table__description-group">
@@ -55,6 +62,7 @@
             </td>
         </tr>
         @endforeach
+        @endif
     </table>
 </div>
 

@@ -14,8 +14,10 @@ use Illuminate\Support\Facades\Auth;
 
 class StampCorrectionRequestController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $tab = $request->input('tab', 'pending');
+
         if (Auth::user()->role === 0) {
             $attendance = Attendance::where('user_id', auth()->id())
                 ->pluck('id');
@@ -46,6 +48,6 @@ class StampCorrectionRequestController extends Controller
             $approved->attendance->date = Carbon::parse($approved->attendance->date)->isoFormat('YYYY/MM/DD');
         }
 
-        return view('stamp_correction_request.index', compact('pendings', 'approveds'));
+        return view('stamp_correction_request.index', compact('tab', 'pendings', 'approveds'));
     }
 }
