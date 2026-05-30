@@ -229,6 +229,6 @@ class AttendanceController extends Controller
                     'end_time' => $request->break_end_time[$index],
                 ]);
         }
-        return view('stamp_correction_request.index', compact('id'));
+        return redirect('/stamp_correction_request/list');
     }
 }
