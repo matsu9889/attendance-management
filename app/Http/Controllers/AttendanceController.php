@@ -194,10 +194,21 @@ class AttendanceController extends Controller
             ->where('id', $id)
             ->with('breakRecord')
             ->first();
-        $date = Carbon::parse($attendance->date)->isoFormat('YYYY年MM月DD日');
+
+        $date = Carbon::parse($attendance->date)->isoFormat('YYYY年M月D日');
+
+        $attendance->start_time = Carbon::parse($attendance->start_time)->format('H:i');
+        $attendance->end_time = Carbon::parse($attendance->end_time)->format('H:i');
+
+        foreach ($attendance->breakRecord as $break) {
+            $break->start_time = Carbon::parse($break->start_time)->format('H:i');
+            $break->end_time = Carbon::parse($break->end_time)->format('H:i');
+        }
+
         $approval = CorrectionRequest::where('approval', 0)
             ->where('attendance_id', $attendance->id)
             ->exists();
+
         return view('attendance.show', compact('id', 'user', 'attendance', 'date', 'approval'));
     }
 
