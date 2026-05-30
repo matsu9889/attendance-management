@@ -22,18 +22,18 @@
                 <div class="label-group">
                     <label class="label" for="attendance">出勤・退勤</label>
                     <div class="input-group">
-                        <div>{{$correction_request->start_time}}</div>
+                        <p class="time">{{$correction_request->start_time}}</p>
                         <span>～</span>
-                        <div>{{$correction_request->end_time}}</div>
+                        <p class="time">{{$correction_request->end_time}}</p>
                     </div>
                 </div>
                 @foreach($correction_request->breakRecords as $breakRecord)
                 <div class="label-group">
                     <label class="label" for="break">休憩{{ $loop->iteration == 1 ? '' : $loop->iteration }}</label>
                     <div class="input-group">
-                        <p>{{$breakRecord->start_time}}</p>
+                        <p class="time">{{$breakRecord->start_time}}</p>
                         <span>～</span>
-                        <p>{{$breakRecord->end_time}}</p>
+                        <p class="time">{{$breakRecord->end_time}}</p>
                     </div>
                 </div>
                 @endforeach
@@ -41,14 +41,13 @@
                     <label class="label" for="break">休憩{{ $attendance->breakRecord->count() == 0 ? '' : $attendance->breakRecord->count()+1 }}</label>
                     <div class="input-group">
                         <p></p>
-                        <span>～</span>
                         <p></p>
                     </div>
                 </div>
                 <div class="label-group">
                     <label class="label" for="comment">備考</label>
                     <div class="input-group">
-                        <p>{{$correction_request->comment}}</p>
+                        <p class="time">{{$correction_request->comment}}</p>
                     </div>
                 </div>
             </div>
