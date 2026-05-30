@@ -17,7 +17,7 @@
                 </div>
                 <div class="label-group">
                     <label class="label" for="date">日付</label>
-                    <div class="text">{{$date}}</div>
+                    <div class="date">{{$date}}</div>
                 </div>
                 <div class="label-group">
                     <label class="label" for="attendance">出勤・退勤</label>
@@ -47,7 +47,7 @@
                 <div class="label-group">
                     <label class="label" for="comment">備考</label>
                     <div class="input-group">
-                        <p class="time">{{$correction_request->comment}}</p>
+                        <p class="text">{{$correction_request->comment}}</p>
                     </div>
                 </div>
             </div>
