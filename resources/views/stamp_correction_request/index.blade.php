@@ -8,11 +8,11 @@
 <div class="container">
     <h1 class="title">申請一覧</h1>
     <div class="tag-group">
-        <div class="tag">
-            <a href="/stamp_correction_request/list?tab=pending">承認待ち</a>
+        <div class="tag @if($tab === 'pending') active @endif">
+            <a class="tag-link" href="/stamp_correction_request/list?tab=pending">承認待ち</a>
         </div>
-        <div class="tag">
-            <a href="/stamp_correction_request/list?tab=approved">承認済み</a>
+        <div class="tag @if($tab === 'approved') active @endif">
+            <a class="tag-link" href="/stamp_correction_request/list?tab=approved">承認済み</a>
         </div>
     </div>
 

@@ -36,6 +36,15 @@ body {
     cursor: pointer;
 }
 
+.tag.active{
+    font-weight: bold;
+}
+
+.tag-link{
+    color: #000000;
+    text-decoration: none;
+}
+
 .month {
     display: flex;
     justify-content: space-between;
