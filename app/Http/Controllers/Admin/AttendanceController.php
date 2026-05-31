@@ -71,7 +71,8 @@ class AttendanceController extends Controller
             ->first();
 
         $user_name = $attendance->user->name;
-        $date = Carbon::parse($attendance->date)->isoFormat('YYYY年M月D日');
+        $year = Carbon::parse($attendance->date)->isoFormat('YYYY年');
+        $date = Carbon::parse($attendance->date)->isoFormat('M月D日');
 
         $attendance->start_time = Carbon::parse($attendance->start_time)->format('H:i');
         $attendance->end_time = Carbon::parse($attendance->end_time)->format('H:i');
@@ -84,7 +85,7 @@ class AttendanceController extends Controller
         $approval = CorrectionRequest::where('approval', 0)
             ->where('attendance_id', $attendance->id)
             ->exists();
-        return view('admin.attendance.show', compact('id', 'user_name', 'attendance', 'date', 'approval'));
+        return view('admin.attendance.show', compact('id', 'user_name', 'attendance', 'year', 'date', 'approval'));
     }
 
     public function correct($id, AttendanceRequest $request)

@@ -16,7 +16,11 @@
             </div>
             <div class="label-group">
                 <label class="label" for="date">日付</label>
-                <div class="text">{{$date}}</div>
+                <div class="input-group">
+                    <div class="date">{{$year}}</div>
+                    <span>&emsp;</span>
+                    <div class="date">{{$date}}</div>
+                </div>
             </div>
             <div class="label-group">
                 <label class="label" for="attendance">出勤・退勤</label>

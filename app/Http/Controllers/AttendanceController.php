@@ -187,6 +187,7 @@ class AttendanceController extends Controller
         return view('attendance.index', compact('attendances', 'days', 'thisMonth', 'subMonth', 'addMonth'));
     }
 
+    // 勤怠詳細画面表示
     public function show($id)
     {
         $user = auth()->user();
@@ -195,7 +196,8 @@ class AttendanceController extends Controller
             ->with('breakRecord')
             ->first();
 
-        $date = Carbon::parse($attendance->date)->isoFormat('YYYY年M月D日');
+        $year = Carbon::parse($attendance->date)->isoFormat('YYYY年');
+        $date = Carbon::parse($attendance->date)->isoFormat('M月D日');
 
         $attendance->start_time = Carbon::parse($attendance->start_time)->format('H:i');
         $attendance->end_time = Carbon::parse($attendance->end_time)->format('H:i');
@@ -209,7 +211,7 @@ class AttendanceController extends Controller
             ->where('attendance_id', $attendance->id)
             ->exists();
 
-        return view('attendance.show', compact('id', 'user', 'attendance', 'date', 'approval'));
+        return view('attendance.show', compact('id', 'user', 'attendance', 'year', 'date', 'approval'));
     }
 
     public function correct($id, AttendanceRequest $request)
