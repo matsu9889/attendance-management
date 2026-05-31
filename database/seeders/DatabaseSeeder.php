@@ -18,10 +18,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Attendance::factory(3)->create();
-        User::factory(3)->create();
-        BreakRecord::factory(3)->create();
-        CorrectionRequest::factory(3)->create();
-        CorrectionRequestBreak::factory(3)->create();
+        User::factory(10)->create();
+        Attendance::factory(10)->create();
+        BreakRecord::factory(10)->create();
+        CorrectionRequest::factory(10)->create();
+        CorrectionRequestBreak::factory(10)->create();
     }
 }

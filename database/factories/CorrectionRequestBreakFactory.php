@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\CorrectionRequest;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CorrectionRequestBreak>
@@ -17,7 +18,7 @@ class CorrectionRequestBreakFactory extends Factory
     public function definition(): array
     {
         return [
-            'correction_request_id' => fake()->numberBetween(1, 10),
+            'correction_request_id' => CorrectionRequest::inRandomOrder()->value('id'),
             'start_time' => '12:30:00',
             'end_time' => '13:00:00',
         ];

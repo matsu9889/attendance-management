@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\User;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Attendance>
@@ -17,7 +18,7 @@ class AttendanceFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => fake()->numberBetween(1, 10),
+            'user_id' => User::inRandomOrder()->value('id'),
             'date' => fake()->dateTimeThisMonth()->format('Y-m-d'),
             'start_time' => '09:00:00',
             'end_time' => '18:00:00',
