@@ -7,6 +7,9 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Attendance;
 use App\Models\BreakRecord;
+use App\Models\CorrectionRequest;
+use App\Models\CorrectionRequestBreak;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,5 +21,7 @@ class DatabaseSeeder extends Seeder
         Attendance::factory(3)->create();
         User::factory(3)->create();
         BreakRecord::factory(3)->create();
+        CorrectionRequest::factory(3)->create();
+        CorrectionRequestBreak::factory(3)->create();
     }
 }
