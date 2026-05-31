@@ -17,6 +17,10 @@
     align-items: center;
 }
 
+.header-nav__item {
+    list-style: none;
+}
+
 .header-nav__link {
     color: #FFF;
     text-decoration: none;
@@ -29,4 +33,23 @@
     font-size: 24px;
     font-weight: bold;
     cursor: pointer;
+}
+
+@media (max-width: 850px) {
+    .header {
+        height: 60px;
+    }
+
+    .header_img {
+        width: 80%;
+    }
+
+    .header-nav {
+        gap: 10px;
+        font-size: 20px;
+    }
+
+    .header-nav__button {
+        font-size: 20px;
+    }
 }
