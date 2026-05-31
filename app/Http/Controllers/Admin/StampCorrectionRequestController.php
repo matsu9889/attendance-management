@@ -23,7 +23,8 @@ class StampCorrectionRequestController extends Controller
             ->first();
 
         $user_name = $attendance->user->name;
-        $date = Carbon::parse($attendance->date)->isoFormat('YYYY年M月D日');
+        $year = Carbon::parse($attendance->date)->isoFormat('YYYY年');
+        $date = Carbon::parse($attendance->date)->isoFormat('M月D日');
 
         $correction_request->start_time = Carbon::parse($correction_request->start_time)->format('H:i');
         $correction_request->end_time = Carbon::parse($correction_request->end_time)->format('H:i');
@@ -33,7 +34,7 @@ class StampCorrectionRequestController extends Controller
             $breakRecord->end_time = Carbon::parse($breakRecord->end_time)->format('H:i');
         }
 
-        return view('admin.stamp_correction_request.edit', compact('id', 'correction_request', 'user_name', 'attendance', 'date',));
+        return view('admin.stamp_correction_request.edit', compact('id', 'correction_request', 'user_name', 'attendance', 'year', 'date',));
     }
 
     public function update($attendance_correct_request_id)
