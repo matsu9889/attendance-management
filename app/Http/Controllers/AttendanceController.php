@@ -220,11 +220,22 @@ class AttendanceController extends Controller
             $break->end_time = Carbon::parse($break->end_time)->format('H:i');
         }
 
-        $approval = CorrectionRequest::where('approval', 0)
+        $correction_request = CorrectionRequest::where('approval', 0)
             ->where('attendance_id', $attendance->id)
-            ->exists();
+            ->with('breakRecords')
+            ->first();
 
-        return view('attendance.show', compact('id', 'user', 'attendance', 'year', 'date', 'approval'));
+        if ($correction_request) {
+            $correction_request->start_time = Carbon::parse($correction_request->start_time)->format('H:i');
+            $correction_request->end_time = Carbon::parse($correction_request->end_time)->format('H:i');
+
+            foreach ($correction_request->breakRecords as $breakRecord) {
+                $breakRecord->start_time = Carbon::parse($breakRecord->start_time)->format('H:i');
+                $breakRecord->end_time = Carbon::parse($breakRecord->end_time)->format('H:i');
+            }
+        }
+
+        return view('attendance.show', compact('id', 'user', 'attendance', 'year', 'date', 'correction_request'));
     }
 
     public function correct($id, AttendanceRequest $request)
