@@ -62,26 +62,26 @@ body {
     text-decoration: none;
 }
 
-.left-arrow {
+.month__arrow--left {
     height: 15px;
     width: 20px;
     opacity: 30%;
 }
 
-.right-arrow{
+.month__arrow--right{
     height: 15px;
     width: 20px;
     opacity: 30%;
     transform: rotate(180deg);
 }
 
-.calendar {
+.month__calendar {
     height: 25px;
     width: 25px;
     vertical-align: text-top;
 }
 
-.this-month {
+.month__label {
     display: inline-block;
     margin-left: 10px;
     font-weight: bold;

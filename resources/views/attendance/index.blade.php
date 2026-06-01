@@ -9,16 +9,16 @@
     <h1 class="title">勤怠一覧</h1>
     <div class="month">
         <a class="month__link" href="/attendance/list?year={{ $subMonth->format('Y') }}&month={{ $subMonth->format('m') }}">
-            <img class="left-arrow" src="{{ asset('images/矢印.png') }}" alt="矢印">
+            <img class="month__arrow--left" src="{{ asset('images/矢印.png') }}" alt="矢印">
             前月
         </a>
         <div>
-            <img class="calendar" src="{{ asset('images/カレンダー.png') }}" alt="カレンダー">
-            <p class="this-month">{{$thisMonth}}</p>
+            <img class="month__calendar" src="{{ asset('images/カレンダー.png') }}" alt="カレンダー">
+            <p class="month__label">{{$thisMonth}}</p>
         </div>
         <a class="month__link" href="/attendance/list?year={{ $addMonth->format('Y') }}&month={{ $addMonth->format('m') }}">
             翌月
-            <img class="right-arrow" src="{{ asset('images/矢印.png') }}" alt="矢印">
+            <img class="month__arrow--right" src="{{ asset('images/矢印.png') }}" alt="矢印">
         </a>
     </div>
 
