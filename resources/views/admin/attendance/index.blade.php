@@ -9,16 +9,16 @@
     <h1 class="title">{{$dateTitle}}の勤怠</h1>
     <div class="month">
         <a class="month__link" href="/admin/attendance/list?year={{ $yesterday->format('Y') }}&month={{ $yesterday->format('m') }}&day={{ $yesterday->format('d') }}">
-            <img class="left-arrow" src="{{ asset('images/矢印.png') }}" alt="矢印">
+            <img class="month__arrow--left" src="{{ asset('images/矢印.png') }}" alt="矢印">
             前日
         </a>
         <div>
-            <img class="calendar" src="{{ asset('images/カレンダー.png') }}" alt="カレンダー">
-            <p class="this-month">{{$dateLabel}}</p>
+            <img class="month__calendar" src="{{ asset('images/カレンダー.png') }}" alt="カレンダー">
+            <p class="month__label">{{$dateLabel}}</p>
         </div>
         <a class="month__link" href="/admin/attendance/list?year={{ $tomorrow->format('Y') }}&month={{ $tomorrow->format('m') }}&day={{ $tomorrow->format('d') }}">
             翌日
-            <img class="right-arrow" src="{{ asset('images/矢印.png') }}" alt="矢印">
+            <img class="month__arrow--right" src="{{ asset('images/矢印.png') }}" alt="矢印">
         </a>
     </div>
 
