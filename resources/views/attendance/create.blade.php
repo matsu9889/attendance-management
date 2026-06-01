@@ -45,9 +45,6 @@
         </form>
         @endif
     </div>
-    @error('message')
-    <p>{{ $message }}</p>
-    @enderror
 </div>
 
 @endsection
