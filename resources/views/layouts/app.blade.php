@@ -12,9 +12,9 @@
 
 <body>
     <header class="header">
-        <div class="header_logo">
+        <div class="header__logo">
             <a href="/attendance">
-                <img class="header_img" src="{{ asset('images/COACHTECHヘッダーロゴ.png') }}" alt="COACHTECH">
+                <img class="header__img" src="{{ asset('images/COACHTECHヘッダーロゴ.png') }}" alt="COACHTECH">
             </a>
         </div>
 
@@ -55,9 +55,7 @@
             @endif
             @else
             <li>
-                <a href="/login">
-                    <button class="header-nav__button">ログイン</button>
-                </a>
+                <a class="header-nav__button" href="/login">ログイン</a>
             </li>
             @endauth
         </ul>
