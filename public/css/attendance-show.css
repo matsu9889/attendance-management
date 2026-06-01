@@ -70,6 +70,11 @@ body {
     text-align: center;
 }
 
+.input-error {
+    color: #FF0000;
+    font-size: 14px;
+}
+
 .time , .date {
     width: 100px;
     font-size: 16px;
