@@ -30,7 +30,24 @@ class AttendanceController extends Controller
         $result = $this->getTime();
         $date = $result['date'];
         $time = $result['time'];
-        return view('attendance.create', compact('date', 'time'));
+        $now = $result['now'];
+
+        $attendance = Attendance::where('user_id', auth()->id())
+            ->where('date', $now->format('Y-m-d'))
+            ->first();
+
+        if (!$attendance) {
+            $work_status = '勤務外';
+        } elseif (!$attendance->end_time) {
+            $breaking = BreakRecord::where('attendance_id', $attendance->id)
+                ->whereNull('end_time')
+                ->exists();
+            $work_status = $breaking ? '休憩中' : '出勤中';
+        } else {
+            $work_status = '退勤済';
+        }
+
+        return view('attendance.create', compact('date', 'time', 'work_status'));
     }
 
     // 出勤登録機能
@@ -56,8 +73,7 @@ class AttendanceController extends Controller
             'end_time' => NULL,
         ]);
 
-        $request->session()->put('work_status', '出勤中');
-        return view('attendance.create', compact('date', 'time'));
+        return redirect('/attendance');
     }
 
     // 退勤機能
@@ -74,8 +90,7 @@ class AttendanceController extends Controller
                 'end_time' => $now->format('H:i'),
             ]);
 
-        $request->session()->put('work_status', '退勤済');
-        return view('attendance.create', compact('date', 'time'));
+        return redirect('/attendance');
     }
 
     // 休憩入機能
@@ -96,8 +111,7 @@ class AttendanceController extends Controller
             'end_time' => NULL,
         ]);
 
-        $request->session()->put('work_status', '休憩中');
-        return view('attendance.create', compact('date', 'time'));
+        return redirect('/attendance');
     }
 
     // 休憩戻機能
@@ -118,8 +132,7 @@ class AttendanceController extends Controller
                 'end_time' => $now->format('H:i'),
             ]);
 
-        $request->session()->put('work_status', '出勤中');
-        return view('attendance.create', compact('date', 'time'));
+        return redirect('/attendance');
     }
 
     // 勤怠一覧画面
