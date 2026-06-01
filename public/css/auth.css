@@ -26,7 +26,12 @@
     border: solid 1px #000;
     border-radius: 4px;
     padding: 0 10px;
+    margin-bottom: 10px;
     box-sizing: border-box;
+}
+
+.form__error {
+    color: #FF0000;
 }
 
 .form__button {

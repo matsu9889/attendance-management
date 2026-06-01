@@ -28,7 +28,7 @@
     </div>
     <div class="form__group">
         <label class="form__label" for="password">パスワード</label>
-        <input class="form__input" name="password" id="password" type="password" value="{{ old('password') }}">
+        <input class="form__input" name="password" id="password" type="password">
         <div class="form__error">
             @error('password')
             {{ $message }}
