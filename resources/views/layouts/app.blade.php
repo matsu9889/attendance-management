@@ -55,7 +55,7 @@
             @endif
             @else
             <li>
-                <a class="header-nav__button" href="/login">ログイン</a>
+                <a class="header-nav__link" href="/login">ログイン</a>
             </li>
             @endauth
         </ul>
