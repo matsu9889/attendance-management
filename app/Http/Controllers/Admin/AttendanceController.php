@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Attendance;
 use App\Models\CorrectionRequest;
 use App\Models\CorrectionRequestBreak;
@@ -28,40 +29,46 @@ class AttendanceController extends Controller
         $dateTitle = $currentDay->format('Y年n月j日');
         $dateLabel = $currentDay->format('Y/m/d');
 
-        $attendances = Attendance::where('date', $currentDay)
-            ->with('breakRecord', 'user')
-            ->get();
+        $users = User::all();
 
-        foreach ($attendances as $attendance) {
-            $attendance->user_name = $attendance->user->name;
-            if ($attendance->start_time && $attendance->end_time) {
-                $work_minutes = Carbon::parse($attendance->end_time)
-                    ->diffInMinutes(Carbon::parse($attendance->start_time));
+        $attendances = Attendance::whereDate('date', $currentDay)
+            ->with('breakRecord')
+            ->get()
+            ->keyBy('user_id');
 
-                $break_total = 0;
+        foreach ($users as $user) {
+            $attendance = $attendances->get($user->id);
 
-                foreach ($attendance->breakRecord as $break) {
-                    if ($break->start_time && $break->end_time) {
-                        $break_total += Carbon::parse($break->end_time)
-                            ->diffInMinutes(Carbon::parse($break->start_time));
+            if ($attendance) {
+                $user->attendance_id = $attendance->id;
+                $user->start_time = $attendance->start_time ? Carbon::parse($attendance->start_time)->format('H:i') : '';
+                $user->end_time = $attendance->end_time ? Carbon::parse($attendance->end_time)->format('H:i') : '';
+
+                if ($attendance->start_time && $attendance->end_time) {
+                    $work_minutes = Carbon::parse($attendance->end_time)->diffInMinutes(Carbon::parse($attendance->start_time));
+                    $break_total_mins = 0;
+                    foreach ($attendance->breakRecord as $break) {
+                        if ($break->start_time && $break->end_time) {
+                            $break_total_mins += Carbon::parse($break->end_time)->diffInMinutes(Carbon::parse($break->start_time));
+                        }
                     }
+                    $work_total_mins = $work_minutes - $break_total_mins;
+
+                    $user->break_total = floor($break_total_mins / 60) . ':' . str_pad($break_total_mins % 60, 2, '0', STR_PAD_LEFT);
+                    $user->work_total = floor($work_total_mins / 60) . ':' . str_pad($work_total_mins % 60, 2, '0', STR_PAD_LEFT);
+                } else {
+                    $user->break_total = '';
+                    $user->work_total = '';
                 }
-
-                $work_total = $work_minutes - $break_total;
-
-                $attendance->start_time = Carbon::parse($attendance->start_time)->format('H:i');
-                $attendance->end_time = Carbon::parse($attendance->end_time)->format('H:i');
-
-                $attendance->break_total = floor($break_total / 60) . ':' . str_pad($break_total % 60, 2, '0', STR_PAD_LEFT);
-                $attendance->work_total = floor($work_total / 60) . ':' . str_pad($work_total % 60, 2, '0', STR_PAD_LEFT);
             } else {
-                $attendance->start_time = null;
-                $attendance->end_time = null;
-                $attendance->break_total = null;
-                $attendance->work_total = null;
+                $user->attendance_id = null;
+                $user->start_time = '';
+                $user->end_time = '';
+                $user->break_total = '';
+                $user->work_total = '';
             }
         }
-        return view('admin.attendance.index', compact('dateTitle', 'dateLabel', 'yesterday', 'tomorrow', 'attendances'));
+        return view('admin.attendance.index', compact('dateTitle', 'dateLabel', 'yesterday', 'tomorrow', 'users'));
     }
 
     public function show($id)

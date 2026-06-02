@@ -31,15 +31,19 @@
             <th class="table__header">合計</th>
             <th class="table__header">詳細</th>
         </tr>
-        @foreach($attendances as $attendance)
+        @foreach($users as $user)
         <tr class="table__description-group">
-            <td class="table__description">{{$attendance->user_name}}</td>
-            <td class="table__description">{{$attendance->start_time}}</td>
-            <td class="table__description">{{$attendance->end_time}}</td>
-            <td class="table__description">{{$attendance->break_total}}</td>
-            <td class="table__description">{{$attendance->work_total}}</td>
+            <td class="table__description">{{$user->name}}</td>
+            <td class="table__description">{{$user->start_time}}</td>
+            <td class="table__description">{{$user->end_time}}</td>
+            <td class="table__description">{{$user->break_total}}</td>
+            <td class="table__description">{{$user->work_total}}</td>
             <td class="table__description">
-                <a class="description-link" href="/admin/attendance/{{$attendance->id}}">詳細</a>
+                @if($user->attendance_id)
+                <a class="description-link" href="/admin/attendance/{{$user->attendance_id}}">詳細</a>
+                @else
+                <a class="description-link" href="">詳細</a>
+                @endif
             </td>
         </tr>
         @endforeach
