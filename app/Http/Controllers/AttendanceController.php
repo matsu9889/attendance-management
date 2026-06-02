@@ -54,8 +54,6 @@ class AttendanceController extends Controller
     {
         $result = $this->getTime();
         $now = $result['now'];
-        $date = $result['date'];
-        $time = $result['time'];
 
         $exists = Attendance::where('user_id', auth()->id())
             ->where('date', $now->format('Y-m-d'))
@@ -80,8 +78,6 @@ class AttendanceController extends Controller
     {
         $result = $this->getTime();
         $now = $result['now'];
-        $date = $result['date'];
-        $time = $result['time'];
 
         Attendance::where('user_id', auth()->id(),)
             ->whereNull('end_time')
@@ -97,8 +93,6 @@ class AttendanceController extends Controller
     {
         $result = $this->getTime();
         $now = $result['now'];
-        $date = $result['date'];
-        $time = $result['time'];
 
         $attendance = Attendance::where('user_id', auth()->id())
             ->where('date', $now->format('Y-m-d'))
@@ -118,8 +112,6 @@ class AttendanceController extends Controller
     {
         $result = $this->getTime();
         $now = $result['now'];
-        $date = $result['date'];
-        $time = $result['time'];
 
         $attendance = Attendance::where('user_id', auth()->id())
             ->where('date', $now->format('Y-m-d'))
@@ -138,7 +130,6 @@ class AttendanceController extends Controller
     public function index()
     {
         $result = $this->getTime();
-        // $date = $result['date'];
 
         $year = request('year') ?? $result['year'];
         $month = request('month') ?? $result['month'];
