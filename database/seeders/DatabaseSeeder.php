@@ -24,10 +24,16 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
             'role' => 1,
         ]);
-        User::factory(10)->create();
+        User::factory()->create([
+            'name' => '一般ユーザー',
+            'email' => 'test@example.com',
+            'password' => bcrypt('password'),
+            'role' => 0,
+        ]);
+        User::factory(5)->create();
         Attendance::factory(10)->create();
         BreakRecord::factory(10)->create();
-        CorrectionRequest::factory(10)->create();
-        CorrectionRequestBreak::factory(10)->create();
+        CorrectionRequest::factory(5)->create();
+        CorrectionRequestBreak::factory(5)->create();
     }
 }
