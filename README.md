@@ -2,7 +2,7 @@
 
 ## 概要
 
-一般ユーザーは出勤・退勤・休憩などの打刻を行うことができます。
+一般ユーザーは出勤・退勤・休憩などの打刻を行うことができます。  
 管理者は一般ユーザーの管理をすることができるアプリです。
 
 ## 環境構築
@@ -60,18 +60,18 @@
 
 ## URL
 
-開発環境
-会員登録: http://localhost/register
-ログイン: http://localhost/login
-勤怠登録画面: http://localhost/attendance
+開発環境  
+会員登録: http://localhost/register  
+ログイン: http://localhost/login  
+勤怠登録画面: http://localhost/attendance  
 phpMyAdmin: http://localhost:8080/
 
 ## テストアカウント
 
-name:管理者
-email:admin@example.com
+name:管理者  
+email:admin@example.com  
 password:password
 
-name:一般ユーザー
-email:test@example.com
+name:一般ユーザー  
+email:test@example.com  
 password:password
