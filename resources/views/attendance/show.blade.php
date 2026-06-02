@@ -98,8 +98,11 @@
                     <span>～</span>
                     <input class="input-time" type="text" name="break_end_time[]" value="{{$breakRecord->end_time}}">
                     <div class="input-error">
-                        @if($errors->has('break_start_time.*') || $errors->has('break_end_time.*'))
+                        @if($errors->has('break_start_time.*'))
                         <p>休憩時間が不適切な値です</p>
+                        @endif
+                        @if($errors->has('break_end_time.*'))
+                        <p>休憩時間もしくは退勤時間が不適切な値です</p>
                         @endif
                     </div>
                 </div>
@@ -112,8 +115,11 @@
                     <span>～</span>
                     <input class="input-time" type="text" name="break_end_time[]" value="">
                     <div class="input-error">
-                        @if($errors->has('break_start_time.*') || $errors->has('break_end_time.*'))
+                        @if($errors->has('break_start_time.*'))
                         <p>休憩時間が不適切な値です</p>
+                        @endif
+                        @if($errors->has('break_end_time.*'))
+                        <p>休憩時間もしくは退勤時間が不適切な値です</p>
                         @endif
                     </div>
                 </div>
