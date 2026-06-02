@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Attendance;
 use App\Models\BreakRecord;
 use App\Models\CorrectionRequest;
-use App\Models\CorrectionRequestBreak;
 
 class StampCorrectionRequestController extends Controller
 {

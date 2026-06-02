@@ -8,7 +8,6 @@ use App\Models\Attendance;
 use App\Models\BreakRecord;
 use App\Models\CorrectionRequest;
 use App\Models\CorrectionRequestBreak;
-use App\Models\User;
 use App\Http\Requests\AttendanceRequest;
 
 class AttendanceController extends Controller
